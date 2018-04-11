@@ -1,0 +1,79 @@
+---
+title: "Task 2"
+author: "George Saunderson"
+date: "4/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+216.4M USD($) in 1973 = 1,255.98M USD($) in 2018 ---> February values
+
+```{r}
+summary(Panel87_HeaderNames)
+```
+
+changing a column title (header):
+colnames(DataFrame)[colnames(DataFrame)=="Old Column Name"] <- "New Column Name"
+-- DataFrame = Panel8589_nohead_87_noX.1
+^ has no headers in it. is only for 1987. has no X.1 (which only contained periods).
+-- "Old Column Name" = X.2, Y1, etc.
+-- "New Column Name" = Employee, Heat Content of Coal, etc.
+
+file with accurate header names = Panel87_HeaderNames
+-- has same characteristics as Panel8589_nohead_87_noX.1 except it has accurate header names
+
+```{r}
+"Daily Average Electricity (kwh)"<-Panel87_HeaderNames$`Electricity (kwh)`/365
+```
+
+This puts the Electricity in kwh into daily averages.
+"Daily Average Electricity (kwh)" = electricity in daily averages. separate chart/table in order to keep the original in tact and easier to work with for conversions.
+
+```{r}
+"Daily Average Electricity (mwh)" <- `Daily Average Electricity (kwh)` * 0.001
+```
+
+1 kwh = 0.001 mwh
+"Daily Average Electricity (mwh)" = electricity in daily averages converted from kwh to mwh in its own chart/table.
+
+```{r}
+Panel87_HeaderNames$newcolumn <- `Daily Average Electricity (mwh)`
+colnames(Panel87_HeaderNames)[colnames(Panel87_HeaderNames)=="newcolumn"] <- "Daily Avg Electricity (MwH)"
+```
+
+merged the daily average electricity (mwh) dataset with the Panel87_headernames dataset to have all the data in one set and ensure each column had the correct header to describe the data.
+
+```{r}
+"Daily Average Pollution - SO2" <- Panel87_HeaderNames$`Short Tons (S02)`/365
+Panel87_HeaderNames$newcolumn <- `Daily Average Pollution - SO2`
+colnames(Panel87_HeaderNames)[colnames(Panel87_HeaderNames)=="newcolumn"] <- "Daily Average Pollution - SO2"
+```
+
+Put SO2 pollution into daily average and added to Panel87_HeaderNames under the "Daily Average Pollution - SO2" column
+
+** All modifications to tables have so far only been made to 1987 for testing and accuracy check. Once checked it will be applied to the whole dataset and the added columns will be added as well **
+
+
