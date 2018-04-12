@@ -76,4 +76,14 @@ Put SO2 pollution into daily average and added to Panel87_HeaderNames under the 
 
 ** All modifications to tables have so far only been made to 1987 for testing and accuracy check. Once checked it will be applied to the whole dataset and the added columns will be added as well **
 
+```{r}
+"Daily Average Pollution - NOx" <- Panel87_HeaderNames$`Short Tons (NOx)`/365
+Panel87_HeaderNames$newcolumn <- `Daily Average Pollution - NOx`
+colnames(Panel87_HeaderNames)[colnames(Panel87_HeaderNames)=="newcolumn"] <- "Daily Average Pollution - NOx"
+```
+
+Put NOx pollution into daily average and added to Panel87_HeaderNames under the "Daily Average Pollution - NOx" column
+
+Checked that the data had been manipulated correctly and am now conducting mass manipulation on entire dataset.
+
 

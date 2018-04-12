@@ -1,0 +1,62 @@
+---
+title: "Task 2"
+author: "George Saunderson"
+date: "4/11/2018"
+output: html_document
+---
+
+```{r}
+Pan_a<- read.csv("/Users/geosau_3/Documents/USD/Spring 2018/ECON 386 - Big Data & Business/Data Cleaning Project/Task 2/Panel_8595.csv", header = FALSE)
+Pan_a$V2 <- NULL
+Pan_b<-Pan_a[-(1), ]
+```
+Pan_a removes V2, and Pan_b removes rows 1 & 2 in order to have pure data and and headers.
+
+```{r}
+colnames(Pan_b)[colnames(Pan_b)=="V1"] <- "Plant ID"
+colnames(Pan_b)[colnames(Pan_b)=="V3"] <- "Year"
+colnames(Pan_b)[colnames(Pan_b)=="V4"] <- "Electricity"
+colnames(Pan_b)[colnames(Pan_b)=="V5"] <- "Short Tons SO2"
+colnames(Pan_b)[colnames(Pan_b)=="V6"] <- "Short Tons NOx"
+colnames(Pan_b)[colnames(Pan_b)=="V7"] <- "Capital Stock"
+colnames(Pan_b)[colnames(Pan_b)=="V8"] <- "Employees"
+colnames(Pan_b)[colnames(Pan_b)=="V9"] <- "Heat Content of Coal"
+colnames(Pan_b)[colnames(Pan_b)=="V10"] <- "Heat Content of Oil"
+colnames(Pan_b)[colnames(Pan_b)=="V11"] <- "Heat Content of Gas"
+colnames(Pan_b)[colnames(Pan_b)=="V12"] <- "F1"
+colnames(Pan_b)[colnames(Pan_b)=="V13"] <- "F2"
+```
+
+Changed each corresponding "V" column header to its designated header per the data on page 37 from table 1.
+
+```{r}
+Pan_b$newcolumn <- Pan_FixedNOx
+colnames(Pan_b)[colnames(Pan_b)=="newcolumn"] <- "Short Tons NOx - Fixed"
+Pan_d <- Pan_b
+Pan_d$'Short Tons NOx' = NULL
+```
+
+This fixed the error of the spaces within the data in the Short Tons NOx column. It also added it to the Panel under Pan_d.
+
+```{r}
+Pan_e <- Pan_d[-c(93,186,279,372,465,558,651,744,837,930,1023), ]
+```
+
+This removes the empty rows containing either no data or NA.
+
+```{r}
+Pan_e$newcolumn <- as.numeric(Pan_e$Year <= 90)
+colnames(Pan_e)[colnames(Pan_e)=="newcolumn"] <- "Dummy"
+Pan_f <- Pan_e
+```
+
+Adding dummy variables separating 1990 as the cutoff time (before 1990 = 1, after 1990 = 0).
+
+```{r}
+Pan_f$F1 = NULL 
+Pan_f$F2 = NULL
+Pan_g <- Pan_f
+```
+
+Removed superfluous variables (columns F1 and F2) given they are neither necessary data points nor necessary columns for the overall data analysis.
+
